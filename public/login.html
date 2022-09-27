@@ -1,0 +1,20 @@
+<h1> test </h1>
+
+<form action="https://locahost:3002/" method="POST" enctype="multipart/form-data">
+    <input type="file" name="avatar">
+    <button>submit</button>
+</form>
+
+<script>
+
+    const express = require('express');
+    const multer = require('multer');
+    const uuid = require('uuid').v4;
+
+    const app = express();
+    app.use(express.static((__dirname, '/public')));
+
+
+
+    app.listen(3002, () => console.log('worked'));
+</script>

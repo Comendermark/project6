@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+    <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
+
+    <meta charset=utf-8 />
+    <title>DataTables - JS Bin</title>
+</head>
+<body>
+<div class="container">
+    Enter search: <input name="testID"></input></br>
+    <button>Fetch Data</button>
+    <table id="example" class="display" width="100%">
+        <thead>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+            <th>email</th>
+            <th>date added</th>
+            <th>grade</th>
+            <th>nationality</th>
+
+        </tr>
+
+
+
+        </thead>
+
+
+        <tfoot>
+        <th>id</th>
+        <th>name</th>
+        <th>email</th>
+        <th>date added</th>
+        <th>grade</th>
+        <th>nationality</th>
+        </tfoot>
+    </table>
+</div>
+</body>
+<script>
+    var table;
+
+    function getDT() {
+        var searchData = {
+            "testID": $('input[name=testID]').val()
+        };
+        $.ajax({
+            Type: 'GET',
+            url: 'http://localhost:3008/scp',
+            data: searchData
+        }).done(function (result) {
+            console.log(typeof result);
+            result = JSON.parse(result);
+            table.clear();
+            table.rows.add(result.data).draw();
+        });
+
+    }
+
+
+
+    $(document).ready(function() {
+        table = $('#example').DataTable({
+            "columns": [
+                { "data": "name" },
+                { "data": "position" },
+                { "data": "office" },
+                { "data": "extn" },
+                { "data": "start_date" },
+                { "data": "salary" }
+            ]
+
+        });
+
+        table.row.add({
+            name: 'aaa',
+            position: 'temp',
+            office: 'temp',
+            extn: 'temp',
+            start_date: 'temp',
+            salary: 'temp',
+        }).draw();
+
+        $('button').on('click', function () {
+            getDT();
+        });
+
+
+
+    } );
+
+
+</script>
+</html>
